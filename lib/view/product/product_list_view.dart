@@ -20,23 +20,21 @@ class ProductListView extends StatelessWidget {
         this.items.length,
         (index) {
           return Container(
-            height: 500.0,
+            width: MediaQuery.of(context).size.width / 1,
             child: Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               color: Colors.white,
               elevation: 4.0,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    height: 150.0,
-                    child: Image.network(
-                      items[index].images[0].url,
-                      fit: BoxFit.fitWidth,
-                      height: 100,
-                    ),
+                  Image.network(
+                    items[index].images[0].url,
+                    fit: BoxFit.fitWidth,
+                    width: MediaQuery.of(context).size.width / 1,
+                    height: 150,
                   ),
                   Padding(
                     padding: EdgeInsets.all(4.0),
