@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_app/bloc/product_bloc.dart';
@@ -13,6 +14,7 @@ class HomeViewChild extends StatefulWidget {
 
 class _HomeViewChildState extends State<HomeViewChild> {
   List<ProductModel> _products = [];
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -33,6 +35,9 @@ class _HomeViewChildState extends State<HomeViewChild> {
               return _buildBody();
               break;
             case ProductStateStatus.ERROR:
+              if (state.errorMessage.isNotEmpty) {
+                _errorMessage = state.errorMessage;
+              }
               return _buildErrorMessage();
               break;
             case ProductStateStatus.LOADING:
@@ -53,11 +58,16 @@ class _HomeViewChildState extends State<HomeViewChild> {
 
   Widget _buildLoading() {
     return Center(
-      child: CircularProgressIndicator(),
+      child: CupertinoActivityIndicator(),
     );
   }
 
   Widget _buildErrorMessage() {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text(_errorMessage),
+      ),
+    );
     return Center(
       child: Text('Empty Data'),
     );
