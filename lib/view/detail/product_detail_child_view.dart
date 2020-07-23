@@ -59,29 +59,48 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            _createHeadlineImage(),
-            _createFavAndBookmarkButton(),
-            _createProductDetail()
-          ],
-        ),
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+              child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  _createHeadlineImage(),
+                  _createFavAndBookmarkButton(),
+                  _createProductDetail(),
+                ],
+              ),
+            ),
+          )),
+          Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: _createBuyButton(),
+          ),
+        ],
       ),
     );
   }
 
   Widget _createHeadlineImage() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3,
-      child: CachedNetworkImage(
-        imageUrl: _product.images[0].url,
-        placeholder: (context, url) => CupertinoActivityIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-        fit: BoxFit.fill,
-      ),
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 3,
+          color: Colors.grey,
+          child: CachedNetworkImage(
+            imageUrl: _product.images[0].url,
+            placeholder: (context, url) => CupertinoActivityIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error_outline),
+            fit: BoxFit.fill,
+          ),
+        ),
+        _createLabelProduct()
+      ],
     );
   }
 
@@ -93,15 +112,25 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Icon(Icons.cancel),
+              child: InkWell(
+                onTap: () {
+                  _showSnackBar('${_product.title} has added to favorite');
+                },
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset('assets/icon/heart.png'),
+                ),
               ),
             ),
             Expanded(
-              child: Container(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.bookmark_border),
+              child: InkWell(
+                onTap: () {
+                  _showSnackBar('${_product.title} has added to bookmark');
+                },
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Icon(Icons.bookmark_border),
+                ),
               ),
             ),
           ],
@@ -115,7 +144,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
       padding: EdgeInsets.all(8.0),
       width: MediaQuery.of(context).size.width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
@@ -126,14 +155,77 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
             ),
           ),
           Text(
-            MoneyFormatter.rupiahFormatter(_product.price.toString()),
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+            MoneyFormatter.rupiahFormatter(_product.price.toDouble()),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+                color: Colors.pink),
           ),
           Text(
             _product.description,
             style: TextStyle(fontSize: 14.0),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _createLabelProduct() {
+    if (_product.status == 'sold') {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 3,
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(4.0),
+          decoration: BoxDecoration(color: Colors.red),
+          child: Text(
+            'SOLD OUT',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 22.0),
+          ),
+        ),
+      );
+    }
+    return Text('');
+  }
+
+  Widget _createBuyButton() {
+    Color colorBuyBtn;
+
+    if (_product.status == 'sold') {
+      colorBuyBtn = Colors.grey;
+    } else {
+      colorBuyBtn = Colors.blue;
+    }
+
+    return Container(
+      padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+      child: RaisedButton(
+        onPressed: () {
+          if (_product.status != 'sold') {
+            _showSnackBar('Buy ${_product.title} item.');
+          }
+        },
+        color: colorBuyBtn,
+        child: Text(
+          "Buy",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  void _showSnackBar(String message) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
       ),
     );
   }

@@ -1,18 +1,17 @@
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class MoneyFormatter {
-  static String rupiahFormatter(String money) {
-    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 123.123);
-    MoneyFormatterOutput fo = fmf.output;
-
-    return fmf
+  static String rupiahFormatter(double money) {
+    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: money);
+    String output = fmf
         .copyWith(
             symbol: 'Rp.',
-            amount: double.parse(money),
+            amount: money,
             fractionDigits: 3,
-            decimalSeparator: '.',
+            decimalSeparator: ',',
             thousandSeparator: '.')
         .output
         .symbolOnLeft;
+    return output.replaceAll(",000", "");
   }
 }

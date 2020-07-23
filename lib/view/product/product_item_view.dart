@@ -29,44 +29,87 @@ class ProductItemView extends StatelessWidget {
   }
 
   Widget _buildProductInformation() {
-    return Card(
-      semanticContainer: true,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: Colors.white,
-      elevation: 4.0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: CachedNetworkImage(
-              imageUrl: product.images[0].url,
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              placeholder: (context, url) => CupertinoActivityIndicator(),
-              fit: BoxFit.fill,
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Card(
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        color: Colors.white,
+        elevation: 4.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  width: width,
+                  height: height / 3,
+                  color: Colors.grey,
+                  child: CachedNetworkImage(
+                    imageUrl: product.images[0].url,
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error_outline),
+                    placeholder: (context, url) => CupertinoActivityIndicator(),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                _createLabelProduct(),
+              ],
             ),
-            width: width,
-            height: height / 3,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
-            child: Text(
-              MoneyFormatter.rupiahFormatter(
-                product.price.toString(),
-              ),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
+            Padding(
+              padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
+              child: Text(
+                MoneyFormatter.rupiahFormatter(
+                  product.price.toDouble(),
+                ),
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 4.0, left: 4.0, right: 4.0),
-            child: Text(product.title),
-          ),
-        ],
+            Padding(
+              padding:
+                  EdgeInsets.only(bottom: 4.0, left: 4.0, right: 4.0, top: 4.0),
+              child: Text(
+                product.title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _createLabelProduct() {
+    if (product.status == 'sold') {
+      return Container(
+        width: width,
+        height: height / 3,
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          width: width,
+          padding: EdgeInsets.all(4.0),
+          decoration: BoxDecoration(color: Colors.red),
+          child: Text(
+            'SOLD OUT',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 22.0),
+          ),
+        ),
+      );
+    }
+    return Text('');
   }
 
   void _openDetailProduct(BuildContext context) {
