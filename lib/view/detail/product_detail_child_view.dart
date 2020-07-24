@@ -173,7 +173,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   Widget _createLabelProduct() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / 2,
       alignment: Alignment.bottomLeft,
       child: Container(
         width: MediaQuery.of(context).size.width,
