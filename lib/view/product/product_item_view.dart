@@ -52,7 +52,9 @@ class ProductItemView extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
-              _createLabelProduct(screenWidth, screenHeight),
+              (product.status == 'sold'
+                  ? _createLabelProduct(screenWidth, screenHeight)
+                  : Container()),
             ],
           ),
           Padding(
@@ -86,27 +88,22 @@ class ProductItemView extends StatelessWidget {
   }
 
   Widget _createLabelProduct(double screenWidth, double screenHeight) {
-    if (product.status == 'sold') {
-      return Container(
+    return Container(
+      width: screenWidth,
+      height: screenHeight / 3,
+      alignment: Alignment.bottomLeft,
+      child: Container(
         width: screenWidth,
-        height: screenHeight / 3,
-        alignment: Alignment.bottomLeft,
-        child: Container(
-          width: screenWidth,
-          padding: EdgeInsets.all(4.0),
-          decoration: BoxDecoration(color: Colors.red),
-          child: Text(
-            'SOLD OUT',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 22.0),
-          ),
+        padding: EdgeInsets.all(4.0),
+        decoration: BoxDecoration(color: Colors.red),
+        child: Text(
+          'SOLD OUT',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22.0),
         ),
-      );
-    }
-    return Container();
+      ),
+    );
   }
 
   void _openDetailProduct(BuildContext context) {

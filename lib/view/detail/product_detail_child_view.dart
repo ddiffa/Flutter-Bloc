@@ -90,7 +90,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height / 2,
           color: Colors.grey,
           child: CachedNetworkImage(
             imageUrl: _product.images[0].url,
@@ -99,7 +99,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
             fit: BoxFit.fill,
           ),
         ),
-        _createLabelProduct()
+        (_product.status == 'sold' ? _createLabelProduct() : Container()),
       ],
     );
   }
@@ -171,28 +171,25 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   }
 
   Widget _createLabelProduct() {
-    if (_product.status == 'sold') {
-      return Container(
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 3,
+      alignment: Alignment.bottomLeft,
+      child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 3,
-        alignment: Alignment.bottomLeft,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(4.0),
-          decoration: BoxDecoration(color: Colors.red),
-          child: Text(
-            'SOLD OUT',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 22.0,
-            ),
+        padding: EdgeInsets.all(4.0),
+        decoration: BoxDecoration(color: Colors.red),
+        child: Text(
+          'SOLD OUT',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22.0,
           ),
         ),
-      );
-    }
-    return Container();
+      ),
+    );
   }
 
   Widget _createBuyButton() {
