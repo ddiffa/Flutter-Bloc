@@ -31,13 +31,12 @@ class _HomeViewChildState extends State<HomeViewChild> {
             case ProductStateStatus.SUCCESS:
               if (state.data is List<ProductModel>) {
                 _products = state.data;
+                return _buildBody();
               }
-              return _buildBody();
+              return _buildErrorMessage();
               break;
             case ProductStateStatus.ERROR:
-              if (state.errorMessage.isNotEmpty) {
-                _errorMessage = state.errorMessage;
-              }
+              _errorMessage = state.errorMessage;
               return _buildErrorMessage();
               break;
             case ProductStateStatus.LOADING:
@@ -65,7 +64,7 @@ class _HomeViewChildState extends State<HomeViewChild> {
   Widget _buildErrorMessage() {
     Scaffold.of(context).showSnackBar(
       SnackBar(
-        content: Text(_errorMessage),
+        content: Text(_errorMessage ?? "error"),
       ),
     );
     return Center(

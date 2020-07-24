@@ -37,16 +37,15 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
           case ProductStateStatus.SUCCESS:
             if (state.data is ProductModel) {
               _product = state.data;
+              return _buildBody();
             }
-            return _buildBody();
+            return _buildErrorMessage();
             break;
           case ProductStateStatus.LOADING:
             return _buildLoading();
             break;
           case ProductStateStatus.ERROR:
-            if (state.errorMessage.isNotEmpty) {
-              _errorMessage = state.errorMessage;
-            }
+            _errorMessage = state.errorMessage;
             return _buildErrorMessage();
             break;
           default:
@@ -191,7 +190,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
         ),
       );
     }
-    return Text('');
+    return Container();
   }
 
   Widget _createBuyButton() {
@@ -229,7 +228,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   }
 
   Widget _buildErrorMessage() {
-    _showSnackBar(_errorMessage);
+    _showSnackBar(_errorMessage ?? 'Error');
     return Center(
       child: Text('Empty Data'),
     );
