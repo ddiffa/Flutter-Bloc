@@ -195,14 +195,6 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   }
 
   Widget _createBuyButton() {
-    Color colorBuyBtn;
-
-    if (_product.status == 'sold') {
-      colorBuyBtn = Colors.grey;
-    } else {
-      colorBuyBtn = Colors.blue;
-    }
-
     return Container(
       padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
       width: MediaQuery.of(context).size.width,
@@ -213,7 +205,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
             _showSnackBar('Buy ${_product.title} item.');
           }
         },
-        color: colorBuyBtn,
+        color: (_product.status == 'sold' ? Colors.grey : Colors.blue),
         child: Text(
           "Buy",
           style: TextStyle(color: Colors.white),
