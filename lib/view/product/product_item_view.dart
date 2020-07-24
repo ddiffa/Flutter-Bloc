@@ -29,61 +29,58 @@ class ProductItemView extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
-    return SizedBox(
-      width: screenWidth,
-      height: screenHeight,
-      child: Card(
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: Colors.white,
-        elevation: 4.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: screenWidth,
-                  height: screenHeight / 3,
-                  color: Colors.grey,
-                  child: CachedNetworkImage(
-                    imageUrl: product.images[0].url,
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error_outline),
-                    placeholder: (context, url) => CupertinoActivityIndicator(),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                _createLabelProduct(screenWidth, screenHeight),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
-              child: Text(
-                MoneyFormatter.rupiahFormatter(
-                  product.price.toDouble(),
-                ),
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+    return Card(
+      semanticContainer: true,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      color: Colors.white,
+      elevation: 4.0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                width: screenWidth,
+                height: screenHeight / 3,
+                color: Colors.grey,
+                child: CachedNetworkImage(
+                  imageUrl: product.images[0].url,
+                  errorWidget: (context, url, error) =>
+                      Icon(Icons.error_outline),
+                  placeholder: (context, url) => CupertinoActivityIndicator(),
+                  fit: BoxFit.fill,
                 ),
               ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.only(bottom: 4.0, left: 4.0, right: 4.0, top: 4.0),
-              child: Text(
-                product.title,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+              _createLabelProduct(screenWidth, screenHeight),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
+            child: Text(
+              MoneyFormatter.rupiahFormatter(
+                product.price.toDouble(),
+              ),
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.pink,
+                fontSize: 16.0,
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.only(bottom: 4.0, left: 4.0, right: 4.0, top: 4.0),
+            child: Text(
+              product.title,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
