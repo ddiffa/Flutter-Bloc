@@ -38,47 +38,52 @@ class ProductItemView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(
-                width: screenWidth,
-                height: screenHeight / 3,
-                color: Colors.grey,
-                child: CachedNetworkImage(
-                  imageUrl: product.images[0].url,
-                  errorWidget: (context, url, error) =>
-                      Icon(Icons.error_outline),
-                  placeholder: (context, url) => CupertinoActivityIndicator(),
-                  fit: BoxFit.fill,
+          Flexible(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: screenWidth,
+                  height: screenHeight / 3,
+                  color: Colors.grey,
+                  child: CachedNetworkImage(
+                    imageUrl: product.images[0].url,
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error_outline),
+                    placeholder: (context, url) => CupertinoActivityIndicator(),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              (product.status == 'sold'
-                  ? _createLabelProduct(screenWidth, screenHeight)
-                  : Container()),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
-            child: Text(
-              MoneyFormatter.rupiahFormatter(
-                product.price.toDouble(),
-              ),
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.pink,
-                fontSize: 16.0,
-              ),
+                (product.status == 'sold'
+                    ? _createLabelProduct(screenWidth, screenHeight)
+                    : Container()),
+              ],
             ),
           ),
-          Padding(
-            padding:
-                EdgeInsets.only(bottom: 4.0, left: 4.0, right: 4.0, top: 4.0),
-            child: Text(
-              product.title,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Colors.black,
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 4.0, left: 4.0, right: 4.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    MoneyFormatter.rupiahFormatter(
+                      product.price.toDouble(),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.pink,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  Text(
+                    product.title,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
