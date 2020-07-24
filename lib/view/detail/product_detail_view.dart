@@ -14,7 +14,7 @@ class ProductDetailView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Product Detail'),
+        title: Text('Product'),
       ),
       body: BlocProvider(
         create: (context) => ProductBloc(),
