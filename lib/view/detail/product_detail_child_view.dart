@@ -32,28 +32,28 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   Widget build(BuildContext context) {
     return Container(
       child: BlocBuilder<ProductBloc, ProductState>(
-          builder: (context, ProductState state) {
-        switch (state.status) {
-          case ProductStateStatus.SUCCESS:
-            if (state.data is ProductModel) {
-              _product = state.data;
-              return _buildBody();
-            }
-            return _buildErrorMessage();
-            break;
-          case ProductStateStatus.LOADING:
-            return _buildLoading();
-            break;
-          case ProductStateStatus.ERROR:
-            _errorMessage = state.errorMessage;
-            return _buildErrorMessage();
-            break;
-          default:
-            return _buildLoading();
-            break;
-        }
-        return _buildLoading();
-      }),
+        builder: (context, ProductState state) {
+          switch (state.status) {
+            case ProductStateStatus.SUCCESS:
+              if (state.data is ProductModel) {
+                _product = state.data;
+                return _buildBody();
+              }
+              return _buildErrorMessage();
+              break;
+            case ProductStateStatus.LOADING:
+              return _buildLoading();
+              break;
+            case ProductStateStatus.ERROR:
+              _errorMessage = state.errorMessage;
+              return _buildErrorMessage();
+              break;
+            default:
+              return _buildLoading();
+              break;
+          }
+        },
+      ),
     );
   }
 
@@ -64,17 +64,18 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
       child: Column(
         children: <Widget>[
           Expanded(
-              child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  _createHeadlineImage(),
-                  _createFavAndBookmarkButton(),
-                  _createProductDetail(),
-                ],
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    _createHeadlineImage(),
+                    _createFavAndBookmarkButton(),
+                    _createProductDetail(),
+                  ],
+                ),
               ),
             ),
-          )),
+          ),
           Align(
             alignment: FractionalOffset.bottomCenter,
             child: _createBuyButton(),
@@ -183,9 +184,10 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
             'SOLD OUT',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 22.0),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22.0,
+            ),
           ),
         ),
       );
