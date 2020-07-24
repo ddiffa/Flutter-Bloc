@@ -106,7 +106,7 @@ class ProductItemView extends StatelessWidget {
         ),
       );
     }
-    return Text('');
+    return Container();
   }
 
   void _openDetailProduct(BuildContext context) {
