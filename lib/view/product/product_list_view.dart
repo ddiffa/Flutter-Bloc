@@ -9,28 +9,22 @@ class ProductListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    final double widthScreen = mediaQueryData.size.width;
-    final double appBarHeight = kToolbarHeight;
-    final double paddingTop = mediaQueryData.padding.top;
-    final double paddingBottom = mediaQueryData.padding.bottom;
-    final double heightScreen = mediaQueryData.size.height;
-
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final appBarHeight = kToolbarHeight;
+    final paddingTop = MediaQuery.of(context).padding.top;
+    final paddingBottom = MediaQuery.of(context).padding.bottom;
     return SafeArea(
       child: GridView.count(
         padding: EdgeInsets.all(8.0),
         physics: BouncingScrollPhysics(),
         crossAxisCount: 2,
-        childAspectRatio: widthScreen /
-            (heightScreen - paddingBottom - paddingTop - appBarHeight),
+        childAspectRatio: screenWidth /
+            (screenHeight - paddingBottom - paddingTop - appBarHeight),
         children: List.generate(
           this.items.length,
           (index) {
-            return ProductItemView(
-              product: items[index],
-              width: widthScreen,
-              height: heightScreen,
-            );
+            return ProductItemView(product: items[index]);
           },
         ),
       ),

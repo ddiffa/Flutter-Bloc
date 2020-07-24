@@ -7,11 +7,8 @@ import 'package:product_app/view/detail/product_detail_view.dart';
 
 class ProductItemView extends StatelessWidget {
   final ProductModel product;
-  final double width;
-  final double height;
 
-  const ProductItemView({Key key, this.product, this.width, this.height})
-      : super(key: key);
+  const ProductItemView({Key key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +21,17 @@ class ProductItemView extends StatelessWidget {
   Widget _buildLayout(BuildContext context) {
     return InkWell(
       onTap: () => _openDetailProduct(context),
-      child: _buildProductInformation(),
+      child: _buildProductInformation(context),
     );
   }
 
-  Widget _buildProductInformation() {
+  Widget _buildProductInformation(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return SizedBox(
-      width: width,
-      height: height,
+      width: screenWidth,
+      height: screenHeight,
       child: Card(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -44,8 +44,8 @@ class ProductItemView extends StatelessWidget {
             Stack(
               children: <Widget>[
                 Container(
-                  width: width,
-                  height: height / 3,
+                  width: screenWidth,
+                  height: screenHeight / 3,
                   color: Colors.grey,
                   child: CachedNetworkImage(
                     imageUrl: product.images[0].url,
@@ -55,7 +55,7 @@ class ProductItemView extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-                _createLabelProduct(),
+                _createLabelProduct(screenWidth, screenHeight),
               ],
             ),
             Padding(
@@ -88,14 +88,14 @@ class ProductItemView extends StatelessWidget {
     );
   }
 
-  Widget _createLabelProduct() {
+  Widget _createLabelProduct(double screenWidth, double screenHeight) {
     if (product.status == 'sold') {
       return Container(
-        width: width,
-        height: height / 3,
+        width: screenWidth,
+        height: screenHeight / 3,
         alignment: Alignment.bottomLeft,
         child: Container(
-          width: width,
+          width: screenWidth,
           padding: EdgeInsets.all(4.0),
           decoration: BoxDecoration(color: Colors.red),
           child: Text(

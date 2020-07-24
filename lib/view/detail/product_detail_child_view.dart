@@ -237,11 +237,7 @@ class _ProductDetailChildViewState extends State<ProductDetailChildView> {
   }
 
   Widget _buildErrorMessage() {
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text(_errorMessage),
-      ),
-    );
+    _showSnackBar(_errorMessage);
     return Center(
       child: Text('Empty Data'),
     );
