@@ -12,10 +12,10 @@ class BaseNetworking {
 
     final response = await http.get(url);
 
-    return processApiResponse(response);
+    return _processApiResponse(response);
   }
 
-  Future<Map<String, dynamic>> processApiResponse(
+  Future<Map<String, dynamic>> _processApiResponse(
       http.Response response) async {
     final body = response.body ?? "";
 

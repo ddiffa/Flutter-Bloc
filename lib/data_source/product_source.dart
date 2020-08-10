@@ -31,7 +31,7 @@ class ProductSource {
           if (jsonResult.containsKey('message')) {
             throw NetworkError.message = jsonResult['message'];
           } else {
-            throw NetworkError.message = "Something wen't wrong";
+            throw NetworkError.message = "Something went wrong";
           }
         }
 
@@ -59,7 +59,7 @@ class ProductSource {
           if (jsonResult.containsKey('message')) {
             throw NetworkError.message = jsonResult['message'];
           } else {
-            throw NetworkError.message = "Something wen't wrong";
+            throw NetworkError.message = "Something went wrong";
           }
         }
 
